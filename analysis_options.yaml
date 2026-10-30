@@ -1,0 +1,19 @@
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    # Beaucoup de constructeurs ci-dessus ne sont pas `const` pour rester
+    # simples à relire pendant le développement — pas une règle bloquante
+    # pour la soutenance, juste désactivée pour ne pas polluer `flutter analyze`
+    # de centaines d'avertissements stylistiques sans rapport avec la logique.
+    prefer_const_constructors: false
+    prefer_const_literals_to_create_immutables: false

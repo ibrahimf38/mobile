@@ -1,0 +1,79 @@
+name: malimall
+description: "MaliMall — application mobile (Market + Wallet)."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # Gestion d'état — ChangeNotifier, suffisant pour ce périmètre et simple à
+  # expliquer en soutenance (pas de riverpod/bloc).
+  provider: ^6.1.2
+
+  # Appels HTTP vers le backend Spring Boot, enveloppés dans core/api/api_client.dart.
+  http: ^1.2.2
+  # MediaType (pour l'upload multipart de photos) — dépendance déjà tirée par
+  # `http`, déclarée ici explicitement plutôt que de compter sur une résolution
+  # transitive.
+  http_parser: ^4.0.2
+
+  # Persistance du JWT (chiffré côté OS — Keychain/Keystore), jamais en clair.
+  flutter_secure_storage: ^9.2.2
+
+  # Police Poppins (charte graphique) chargée depuis Google Fonts au premier
+  # lancement puis mise en cache localement — pas besoin de livrer les
+  # fichiers .ttf nous-mêmes ni de les déclarer dans la section "fonts" ci-dessous.
+  google_fonts: ^6.2.1
+
+  # Formatage des dates (dateCommande / dateLivraison).
+  intl: ^0.19.0
+
+  # Sélection d'une photo (galerie ou appareil photo) pour l'upload produit/boutique
+  # vers Supabase Storage (via le backend — voir core/api/api_client.dart#postMultipart).
+  image_picker: ^1.1.2
+
+  # QR codes des deux codes de livraison : affichage (vendeur, livreur) et
+  # scan à la caméra (livreur au retrait, acheteur à la réception).
+  qr_flutter: ^4.1.0
+  mobile_scanner: ^7.0.0
+
+  # Carte Google Maps (livraisons et MotoTaxi) et position GPS du téléphone :
+  # point de livraison exact, suivi du livreur / chauffeur en direct.
+  google_maps_flutter: ^2.12.0
+  geolocator: ^14.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+  # Génère l'icône native (Android/iOS) à partir de assets/icon/*.png — voir
+  # la section "Icône de l'app" du README mobile pour la commande à lancer.
+  flutter_launcher_icons: ^0.14.3
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    # Photos des carrousels d'onboarding (maquette 01/02), exportées de Figma.
+    - assets/images/onboarding/
+    # Logo vectorisé (icône + logo complet) — voir README, section "Logo".
+    - assets/branding/
+
+# Configuration de flutter_launcher_icons (voir README, section "Icône de
+# l'app") — ne fait rien tant que la commande n'est pas lancée manuellement.
+flutter_launcher_icons:
+  image_path: "assets/icon/icon_ios.png"
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  min_sdk_android: 21
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/icon/icon_adaptive_fg.png"
